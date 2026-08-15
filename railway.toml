@@ -1,0 +1,11 @@
+# Lives at the repo root (not server/) so the Docker build context includes
+# patterns/ — the Dockerfile copies both server/ and patterns/.
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "server/Dockerfile"
+
+[deploy]
+restartPolicyType = "on_failure"
+# No healthcheckPath on purpose: every route sits behind the fail-closed
+# gate, and an unauthenticated health probe would just see 401s.

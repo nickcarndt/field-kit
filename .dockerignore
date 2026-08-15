@@ -1,0 +1,7 @@
+server/.venv
+**/__pycache__
+**/.pytest_cache
+*.pyc
+.git
+BUILD-LOG.md
+fieldkit-spec-v2.md

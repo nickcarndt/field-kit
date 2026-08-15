@@ -1,0 +1,8 @@
+# The API key lives in server/.env locally and in Railway's dashboard in
+# prod — it must never be committed.
+server/.env
+server/.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.DS_Store
