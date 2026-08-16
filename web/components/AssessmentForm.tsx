@@ -131,6 +131,12 @@ export function AssessmentForm({
         <div className="assess-result">
           <section aria-label="Maturity profile">
             <h2 className="axis-title">Profile</h2>
+            {/* Keep in sync with LEVELS/GAP_BELOW in lib/assess.ts. */}
+            <p className="find-caption band-legend">
+              Each score is the mean of your 0–3 answers for that axis. Bands:
+              under 1 nascent · under 2 emerging · under 2.75 established ·
+              2.75+ production-ready. Any axis under 2.0 lands on the roadmap.
+            </p>
             <ul className="profile-list">
               {result.profile.map((p) => (
                 <li key={p.axis}>
