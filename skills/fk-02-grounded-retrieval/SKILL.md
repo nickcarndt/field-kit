@@ -49,8 +49,9 @@ closed evidence set to ground against and abstention has no meaning.
 - **Citation grounding enforced in code, never by prompt request.** Generate
   passage-level references — via the first-class citations capability, or a
   citation schema in structured output — then validate every one against the
-  evidence set after generation. An invalid citation fails the response — it
-  is not a warning.
+  evidence set after generation. An invalid citation is stripped and the
+  claim it supported never reaches the user; a response left with no valid
+  citations becomes an abstention, never a warning.
 - **Confidence-based abstention.** Below threshold, the system returns "not
   established in this corpus" with the nearest passages, instead of an answer.
   The refusal is a feature; it is the reason the answers are believable.
