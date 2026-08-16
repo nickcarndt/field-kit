@@ -54,6 +54,22 @@ class TestConfiguredServer:
         assert client("sk-fieldkit").get("/").json() == {"error": "unauthorized"}
 
 
+class TestHardening:
+    def test_duplicate_api_key_headers_rejected(self):
+        # Even two copies of the CORRECT key: duplicate auth headers are a
+        # smuggling vector behind proxies, so the gate refuses to pick one.
+        r = client("sk-fieldkit").get(
+            "/", headers=[("x-api-key", "sk-fieldkit"), ("x-api-key", "sk-fieldkit")]
+        )
+        assert r.status_code == 401
+
+    def test_whitespace_configured_key_is_treated_as_unset(self):
+        from mcp_server.config import Settings
+
+        assert Settings(api_key="   ").api_key is None
+        assert Settings(api_key=" real-key ").api_key == "real-key"
+
+
 class TestPureLogic:
     def test_truth_table(self):
         assert is_authorized("k", "k") is True

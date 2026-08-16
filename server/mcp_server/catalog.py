@@ -58,6 +58,13 @@ class GroundedIn(BaseModel):
         return v
 
 
+class Axis(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    key: str
+    name: str
+    routes_to: str
+
+
 class Pattern(BaseModel):
     # extra="forbid" makes the model the schema: a typo'd or undocumented
     # frontmatter field in a future FK-06 fails at startup instead of being
@@ -76,6 +83,7 @@ class Pattern(BaseModel):
     grounded_in: list[GroundedIn]
     pairs_with_all: bool = False
     fallback: bool = False
+    axes: list[Axis] = []
     framing: str
     sections: dict[str, str]
 
@@ -136,4 +144,13 @@ def load_catalog(patterns_dir: Path) -> dict[str, Pattern]:
     if not files:
         raise CatalogError(f"no pattern files found in {patterns_dir}")
     patterns = [_parse_file(p) for p in files]
-    return {p.id: p for p in patterns}
+    catalog = {p.id: p for p in patterns}
+    # Cross-file references only checkable once everything is loaded: an
+    # axis routing to a renamed or deleted pattern dies here, at startup.
+    for p in patterns:
+        for ax in p.axes:
+            if ax.routes_to not in catalog:
+                raise CatalogError(
+                    f"{p.id}: axis {ax.key!r} routes to unknown pattern {ax.routes_to!r}"
+                )
+    return catalog

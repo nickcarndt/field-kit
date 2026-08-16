@@ -1,4 +1,9 @@
+# **/.env mirrors .gitignore's secret exclusion: the API key must never
+# enter an image layer any more than a commit.
+**/.env
 server/.venv
+**/build/
+**/*.egg-info
 **/__pycache__
 **/.pytest_cache
 *.pyc

@@ -1,77 +1,7 @@
 ---
-id: FK-05
-slug: readiness-assessment
-name: Deployment Readiness Assessment
-thesis: Are we actually ready to take this to production?
-kills: "Where do we even start?"
-taxonomy: routing workflow with structured outputs
-description: >
-  Use at engagement kickoff, quarterly practice reviews, or pre-sales
-  discovery when a partner team has pilots, pressure, and no honest map —
-  scoring practice maturity across delivery, evals, governance, and Claude
-  fluency, and producing a roadmap that routes each gap to a specific
-  FieldKit pattern.
-fallback: true
-axes:
-  - key: delivery
-    name: Delivery
-    routes_to: FK-01
-  - key: evals
-    name: Evals
-    routes_to: FK-03
-  - key: governance
-    name: Governance
-    routes_to: FK-04
-  - key: claude_fluency
-    name: Claude fluency
-    routes_to: FK-02
-triggers:
-  - readiness
-  - maturity
-  - assess
-  - where to start
-  - where do we
-  - multiple pilots
-  - ai strategy
-  - roadmap
-  - kickoff
-  - discovery
-  - practice review
-  - governance
-  - to production
-exemplars:
-  - name: Evolved from the Federal Readiness Suite
-    url: https://federal-readiness-suite.vercel.app
-grounded_in:
-  - source: Field experience — GSI delivery practice
-    authors: Nick Arndt
-    principle: >
-      The honest outlier: not derived from Anthropic's published guidance.
-      This pattern comes from watching enablement fail from inside a
-      consulting practice — assessments that flatter instead of diagnose,
-      and pilots that multiply because nobody mapped gaps to next actions.
-      It is also first on the kit's own cut list, deliberately.
-  - source: Structured outputs (Claude Docs)
-    authors: Anthropic
-    url: https://platform.claude.com/docs/en/build-with-claude/structured-outputs
-    principle: >
-      The scoring mechanism rides on schema-constrained decoding — the
-      assessment's output is a validated, typed profile, never free prose
-      that someone has to interpret.
+name: fk-05-readiness-assessment
+description: "Use at engagement kickoff, quarterly practice reviews, or pre-sales discovery when a partner team has pilots, pressure, and no honest map — scoring practice maturity across delivery, evals, governance, and Claude fluency, and producing a roadmap that routes each gap to a specific FieldKit pattern."
 ---
-
-<!-- Same machine contract, one loosening the parser must honor: grounded_in
-     entries may lack url/date — the first entry here cites field experience,
-     which is the point, not an omission.
-     `fallback: true` is a rubric policy flag like FK-03's pairs_with_all:
-     when a use case matches no trigger anywhere, recommend_pattern returns
-     this pattern alone — "where do we even start" is definitionally the
-     right answer to an unclassifiable ask. Policy in data, tool stays
-     generic.
-     `axes` powers assess_readiness the same way: four axes, anchored 0-3
-     scoring, each axis routing its gap to a pattern id. Re-routing a gap is
-     a content edit here, never a code change — and load_catalog validates
-     every routes_to against real catalog ids at startup. -->
 
 # FK-05 · Deployment Readiness Assessment
 
@@ -173,3 +103,10 @@ here to the four axes a GSI AI practice actually varies on.
    trace each disagreement to an anchor or an answer.
 4. **1:15 – 1:30** — Commit to the first routed pattern: which FK number,
    which pilot, who owns it, reviewed when.
+
+---
+
+Grounded in:
+
+- Field experience — GSI delivery practice — Nick Arndt
+- Structured outputs (Claude Docs) — Anthropic — https://platform.claude.com/docs/en/build-with-claude/structured-outputs

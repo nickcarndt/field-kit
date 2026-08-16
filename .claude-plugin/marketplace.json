@@ -1,0 +1,13 @@
+{
+  "name": "fieldkit-dev",
+  "owner": {
+    "name": "Nick Arndt"
+  },
+  "plugins": [
+    {
+      "name": "fieldkit",
+      "source": "./",
+      "description": "Five field-tested Claude deployment patterns as installable Agent Skills + a live MCP catalog server."
+    }
+  ]
+}

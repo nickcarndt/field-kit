@@ -15,6 +15,11 @@ COPY patterns/ patterns/
 # the deps anyway. Optimize when that stops being true.
 RUN pip install --no-cache-dir ./server
 
+# Nothing here needs root: the server binds a high port and reads patterns
+# read-only. Least privilege for the process, not just the tools.
+RUN useradd --no-create-home app
+USER app
+
 # pip install relocates mcp_server into site-packages, so config.py's
 # repo-relative default for patterns_dir points at nothing in here — the
 # env var is load-bearing, not decoration.

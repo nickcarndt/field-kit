@@ -1,73 +1,7 @@
 ---
-id: FK-04
-slug: mcp-integration
-name: MCP Integration Pattern
-thesis: How Claude reaches enterprise systems without anyone losing sleep.
-kills: "We can't give an AI access to our systems."
-taxonomy: agent-computer interface (ACI)
-description: >
-  Use when a client wants Claude to act on real internal systems — databases,
-  ticketing, ERP, proprietary APIs — and the security team needs to know
-  exactly what it can touch, how access is authenticated, and what happens
-  when auth fails. Covers MCP server design, narrow typed tools, fail-closed
-  auth, and least privilege.
-triggers:
-  - mcp
-  - integrat
-  - connect
-  - internal system
-  - enterprise system
-  - tool
-  - api
-  - authenticat
-  - authoriz
-  - oauth
-  - security
-  - access control
-  - database
-  - least privilege
-exemplars:
-  - name: Verity's MCP server
-    url: https://verity-navy-five.vercel.app
-  - name: FieldKit itself
-grounded_in:
-  - source: Model Context Protocol specification
-    authors: MCP project (vendor-neutral, Agentic AI Foundation / Linux Foundation)
-    url: https://modelcontextprotocol.io
-    principle: >
-      An open standard for connecting AI applications to external systems —
-      JSON-RPC 2.0 messages over defined transports, tools and resources as
-      typed, discoverable capabilities.
-  - source: MCP joins the Agentic AI Foundation
-    authors: Model Context Protocol project blog
-    date: "2025-12-09"
-    url: https://blog.modelcontextprotocol.io/posts/2025-12-09-mcp-joins-agentic-ai-foundation/
-    principle: >
-      Anthropic donated MCP to the Agentic AI Foundation, a directed fund
-      under the Linux Foundation co-founded with Block and OpenAI — the
-      protocol is vendor-neutral, not Anthropic proprietary.
-  - source: Building effective agents (Appendix 2, the agent-computer interface)
-    authors: Erik Schluntz and Barry Zhang, Anthropic Engineering
-    date: "2024-12-19"
-    url: https://www.anthropic.com/engineering/building-effective-agents
-    principle: >
-      Invest as much effort in agent-computer interfaces as in human-computer
-      interfaces — tool definitions, naming, and parameter design deserve the
-      same craft as a user-facing UI.
-  - source: "Code execution with MCP: Building more efficient agents"
-    authors: Anthropic Engineering
-    date: "2025-11-04"
-    url: https://www.anthropic.com/engineering/code-execution-with-mcp
-    principle: >
-      At scale, present MCP servers as code APIs and let the agent load tool
-      definitions on demand — cutting token overhead dramatically versus
-      loading every tool definition into context.
+name: fk-04-mcp-integration
+description: "Use when a client wants Claude to act on real internal systems — databases, ticketing, ERP, proprietary APIs — and the security team needs to know exactly what it can touch, how access is authenticated, and what happens when auth fails. Covers MCP server design, narrow typed tools, fail-closed auth, and least privilege."
 ---
-
-<!-- Same machine contract as FK-01/02/03. This is the pattern FieldKit's own
-     server (server/, Build Block 2) must visibly practice: narrow typed
-     tools, fail-closed auth. Any drift between this file and that server is
-     a credibility bug, not a style issue. -->
 
 # FK-04 · MCP Integration Pattern
 
@@ -173,3 +107,12 @@ demonstration is already running.
    every request refuse. Fail-closed as demonstrated behavior, not slideware.
 4. **1:15 – 1:30** — Map one system from the room onto a five-tool MCP
    surface; write the index-card tool list a reviewer would sign.
+
+---
+
+Grounded in:
+
+- Model Context Protocol specification — MCP project (vendor-neutral, Agentic AI Foundation / Linux Foundation) — https://modelcontextprotocol.io
+- MCP joins the Agentic AI Foundation — Model Context Protocol project blog (2025-12-09) — https://blog.modelcontextprotocol.io/posts/2025-12-09-mcp-joins-agentic-ai-foundation/
+- Building effective agents (Appendix 2, the agent-computer interface) — Erik Schluntz and Barry Zhang, Anthropic Engineering (2024-12-19) — https://www.anthropic.com/engineering/building-effective-agents
+- Code execution with MCP: Building more efficient agents — Anthropic Engineering (2025-11-04) — https://www.anthropic.com/engineering/code-execution-with-mcp

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fieldkit": {
+      "type": "http",
+      "url": "https://fieldkit-production-bd50.up.railway.app/mcp",
+      "headers": {
+        "x-api-key": "${FIELDKIT_API_KEY}"
+      }
+    }
+  }
+}

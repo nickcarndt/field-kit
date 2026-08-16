@@ -7,5 +7,6 @@ How it works, in my words: These are md files with - - - frontmatter, aka struct
 
 ## Block 2 — MCP Server
 
-What I built:
-How it works, in my words:
+What I built: a MCP server package that lists the tools as a catalog, it gets one full pattern and then runs the recommend pattern as the hard gate itself
+How it works, in my words: main.py is the main routing mechanism for the MCP.  then the 3 tools are created
+

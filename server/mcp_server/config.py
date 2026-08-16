@@ -3,7 +3,7 @@
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import Field
+from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -24,6 +24,15 @@ class Settings(BaseSettings):
     # outage, not an exposure.
     api_key: str | None = Field(default=None)
     host: str = "0.0.0.0"
+
+    @field_validator("api_key")
+    @classmethod
+    def _whitespace_is_unset(cls, v: str | None) -> str | None:
+        # A whitespace-only key would lock out every caller while *looking*
+        # configured — normalize to unset so the outage reads as what it is.
+        if v is not None and not v.strip():
+            return None
+        return v.strip() if v else v
     port: int = 8000
     patterns_dir: Path = _REPO_ROOT / "patterns"
 

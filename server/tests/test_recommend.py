@@ -71,6 +71,24 @@ class TestFalsePositivesStayDead:
         assert all(rec["id"] == "FK-05" for rec in r["recommendations"])
 
 
+class TestCompanionTriggersAreLive:
+    def test_evals_only_query_returns_fk03_with_evidence_not_fallback(self):
+        # Review catch: companions were skipped before matching, so an evals
+        # question — the likeliest ask from this audience — falsely hit the
+        # "no strong trigger match" fallback. Pinned dead.
+        r = recommend_pattern(
+            CATALOG, "we need an eval harness with regression metrics and a launch gate"
+        )
+        assert ids(r) == ["FK-03"]
+        assert "eval" in r["recommendations"][0]["matched_triggers"]
+        assert "no strong trigger match" not in r["recommendations"][0]["reason"]
+
+    def test_companion_shows_its_own_evidence_when_it_also_matched(self):
+        r = recommend_pattern(CATALOG, "claims processing with a proper eval gate")
+        fk03 = next(rec for rec in r["recommendations"] if rec["id"] == "FK-03")
+        assert "eval" in fk03["matched_triggers"]
+
+
 class TestFallback:
     def test_zero_match_returns_fk05_alone(self):
         r = recommend_pattern(CATALOG, "help us plan a company offsite")

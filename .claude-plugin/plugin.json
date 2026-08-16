@@ -1,0 +1,8 @@
+{
+  "name": "fieldkit",
+  "version": "0.1.0",
+  "description": "Anthropic-aligned reference architectures for partner AI practices: five field-tested patterns as Agent Skills, plus a live MCP catalog server with a deterministic pattern recommender.",
+  "author": {
+    "name": "Nick Arndt"
+  }
+}
