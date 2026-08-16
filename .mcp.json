@@ -4,7 +4,7 @@
       "type": "http",
       "url": "https://fieldkit-production-bd50.up.railway.app/mcp",
       "headers": {
-        "x-api-key": "${FIELDKIT_API_KEY}"
+        "x-api-key": "${FIELDKIT_API_KEY:-fieldkit-demo-2026}"
       }
     }
   }

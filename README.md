@@ -58,16 +58,16 @@ start `claude`, then:
 Ask *"when should a system say I-don't-know instead of answering?"* and watch
 FK-02 load itself.
 
-**Connect the live catalog server:** the repo's `.mcp.json` already points at
-the deployed server; it authenticates with an API key from your environment
-(the key is never committed — see [Field notes](#field-notes) to request
-one):
+**Connect the live catalog server — zero setup:** the repo's `.mcp.json`
+points at the deployed server and falls back to the published demo key
+(`fieldkit-demo-2026`), so a fresh clone works immediately. Publishing that
+key is a deliberate least-privilege judgment: every tool is a read-only view
+over content already public in this repo. The gate itself stays fail-closed —
+change one character of the key and every request returns 401 — and
+production tenants connect with private per-client keys instead
+(`export FIELDKIT_API_KEY=<your key>` overrides the default).
 
-```bash
-export FIELDKIT_API_KEY=<your key>
-```
-
-Restart `claude` in this directory, approve the project server, and run the
+Start `claude` in this directory, approve the project server, and run the
 thirty-second demo:
 
 > Ask FieldKit which pattern fits a claims-processing agent for an insurance
@@ -141,8 +141,8 @@ A pattern library earns trust by absorbing what the field learns. Deployment
 patterns that should exist next: multi-agent orchestration boundaries,
 human-in-the-loop copilot ergonomics, the knowledge-worker enablement
 surface. If you deploy one of these patterns — or hit a failure mode these
-docs missed — open an issue or write to nickcarndt@gmail.com. To request an
-API key for the live server, same address.
+docs missed — open an issue or write to nick@nickarndt.com. To request a
+private per-client key for the live server, same address.
 
 ---
 

@@ -23,9 +23,15 @@ class Settings(BaseSettings):
     # "reject everything," so a deploy that forgets FIELDKIT_API_KEY ships an
     # outage, not an exposure.
     api_key: str | None = Field(default=None)
+    # A second, deliberately publishable key. Safe to print on the website
+    # because every tool is a read-only view over content that is already
+    # public in the repo — least privilege is a judgment about what is
+    # behind the door. Fail-closed is unchanged: no keys configured, no
+    # requests served. Production tenants get per-client private keys.
+    demo_key: str | None = Field(default=None)
     host: str = "0.0.0.0"
 
-    @field_validator("api_key")
+    @field_validator("api_key", "demo_key")
     @classmethod
     def _whitespace_is_unset(cls, v: str | None) -> str | None:
         # A whitespace-only key would lock out every caller while *looking*

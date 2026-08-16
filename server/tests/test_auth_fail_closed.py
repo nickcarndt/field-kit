@@ -15,8 +15,8 @@ async def _ok_app(scope, receive, send):
     await send({"type": "http.response.body", "body": b"ok"})
 
 
-def client(expected_key: str | None) -> TestClient:
-    return TestClient(ApiKeyGate(_ok_app, expected_key=expected_key))
+def client(*expected_keys: str | None) -> TestClient:
+    return TestClient(ApiKeyGate(_ok_app, expected_keys=list(expected_keys)))
 
 
 class TestMisconfiguredServerLocks:
@@ -52,6 +52,29 @@ class TestConfiguredServer:
     def test_rejection_body_is_generic(self):
         # No failure mode may explain itself to the caller.
         assert client("sk-fieldkit").get("/").json() == {"error": "unauthorized"}
+
+
+class TestTwoKeyGate:
+    def test_private_and_demo_keys_both_pass(self):
+        c = client("sk-private", "fieldkit-demo")
+        assert c.get("/", headers={"x-api-key": "sk-private"}).status_code == 200
+        assert c.get("/", headers={"x-api-key": "fieldkit-demo"}).status_code == 200
+
+    def test_wrong_key_still_rejected_with_two_configured(self):
+        assert client("sk-private", "fieldkit-demo").get(
+            "/", headers={"x-api-key": "fieldkit-dem0"}
+        ).status_code == 401
+
+    def test_no_keys_configured_locks_everything(self):
+        # The fail-closed core survives the two-key extension.
+        assert client(None, None).get(
+            "/", headers={"x-api-key": "anything"}
+        ).status_code == 401
+
+    def test_empty_key_in_list_grants_nothing(self):
+        assert client("sk-private", "").get(
+            "/", headers={"x-api-key": ""}
+        ).status_code == 401
 
 
 class TestHardening:

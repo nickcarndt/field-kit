@@ -50,9 +50,12 @@ class ApiKeyGate:
     reveals whether a key is wrong, missing, or the server is misconfigured.
     """
 
-    def __init__(self, app, expected_key: str | None) -> None:
+    def __init__(self, app, expected_keys: list[str | None]) -> None:
         self.app = app
-        self.expected_key = expected_key
+        # Multiple valid keys (private + published demo), each checked with
+        # the same timing-safe primitive. An empty or all-None list locks
+        # the server: any() over nothing is False, which is the point.
+        self.expected_keys = expected_keys
 
     async def __call__(self, scope, receive, send) -> None:
         # Deny by default: known scope types are handled explicitly, so a
@@ -81,7 +84,7 @@ class ApiKeyGate:
             k.decode("latin-1").lower(): v.decode("latin-1") for k, v in raw_headers
         }
         presented = _presented_key(headers)
-        if is_authorized(presented, self.expected_key):
+        if any(is_authorized(presented, key) for key in self.expected_keys):
             await self.app(scope, receive, send)
             return
 

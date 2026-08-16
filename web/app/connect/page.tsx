@@ -63,17 +63,24 @@ export default function ConnectPage() {
         Foundation — donated December 2025 — not an Anthropic-proprietary protocol.
       </p>
       <p>
-        The repo&apos;s <code>.mcp.json</code> already points at the deployed server. This
-        site never calls it and never embeds a key. The URL appears here as text:
+        The repo&apos;s <code>.mcp.json</code> already points at the deployed server and
+        falls back to the published demo key, so a fresh clone connects with zero
+        setup. This site never calls the server itself. The URL and demo key, as
+        text:
       </p>
       <p className="mcp-url">{MCP_URL}</p>
+      <InstallPanel code={"x-api-key: fieldkit-demo-2026"} />
       <p>
-        It authenticates with an API key from your environment (the key is never
-        committed — write to nickcarndt@gmail.com to request one):
+        Publishing a key is a deliberate least-privilege judgment, not an oversight:
+        every tool is a read-only view over content already public in this repo, so
+        the demo key grants nothing the website doesn&apos;t. The gate itself stays
+        fail-closed — change one character of that key and every request returns
+        401, which is a better demonstration than any diagram. Production tenants
+        connect with private per-client keys instead (write to nick@nickarndt.com;
+        <code> export FIELDKIT_API_KEY</code> overrides the default).
       </p>
-      <InstallPanel code={"export FIELDKIT_API_KEY=<your key>"} />
       <p>
-        Restart <code>claude</code> in this directory, approve the project server, and
+        Start <code>claude</code> in this directory, approve the project server, and
         run the thirty-second demo. The answer is FK-01 plus FK-03, with the matched
         triggers as evidence — the recommendation is a deterministic, auditable rubric,
         not a model call.

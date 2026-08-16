@@ -386,6 +386,86 @@ h1.plate-name {
   margin: 0 0 0.75rem;
 }
 
+/* Schematic figures: the site's own drafting style — ink nodes, mono
+   labels, one signal path per pattern. Sans context so serif never leaks
+   into the instrument. */
+.flow-diagram {
+  margin: 0 0 1.5rem;
+  padding: 1rem 1.1rem 0.85rem;
+  border: 1px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--press);
+  background: var(--paper);
+  font-family: var(--font-sans), "IBM Plex Sans", sans-serif;
+}
+
+.flow {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  row-gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+.flow li {
+  display: flex;
+  align-items: center;
+}
+
+.flow-node {
+  display: block;
+  border: 1px solid var(--ink);
+  padding: 0.25rem 0.55rem;
+  text-align: center;
+}
+
+.flow-label {
+  display: block;
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: var(--meta-size);
+  line-height: var(--meta-line);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.flow-detail {
+  display: block;
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--field-ink);
+  white-space: nowrap;
+}
+
+.flow li:not(:last-child)::after {
+  content: "→";
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  color: var(--ink);
+  padding: 0 0.45rem;
+}
+
+.flow-caption {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--field-line);
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: var(--meta-size);
+  line-height: var(--meta-line);
+}
+
+.flow-fig {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.flow-note {
+  display: block;
+  color: var(--field-ink);
+}
+
 .markdown > *:first-child {
   margin-top: 0;
 }

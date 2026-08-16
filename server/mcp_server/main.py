@@ -121,7 +121,10 @@ def assess_readiness(
 # We run uvicorn against the wrapped ASGI app instead of calling mcp.run():
 # mcp.run() would start its own server around the unwrapped app and the auth
 # gate would never see a request.
-app = ApiKeyGate(mcp.streamable_http_app(), expected_key=settings.api_key)
+app = ApiKeyGate(
+    mcp.streamable_http_app(),
+    expected_keys=[settings.api_key, settings.demo_key],
+)
 
 
 def run() -> None:
