@@ -12,19 +12,40 @@ description: >
   fluency, and producing a roadmap that routes each gap to a specific
   FieldKit pattern.
 fallback: true
+scale:
+  - "0 — Not present: does not exist today"
+  - "1 — Ad hoc: happens sometimes, depends on individuals"
+  - "2 — Repeatable: documented and usually followed"
+  - "3 — Enforced: automatic, gated, or contractual; deviations are loud"
 axes:
   - key: delivery
     name: Delivery
     routes_to: FK-01
+    items:
+      - Code review, CI, and automated deployment for everything that ships
+      - Rollback and incident response as practiced procedures with owners
+      - Monitoring that tells the team about failures before clients do
   - key: evals
     name: Evals
     routes_to: FK-03
+    items:
+      - Success metrics defined and agreed in writing before build starts
+      - Labeled fixture sets with known-correct answers, including unhappy paths
+      - Eval suites that run automatically and gate releases
   - key: governance
     name: Governance
     routes_to: FK-04
+    items:
+      - A named owner who signs off on AI risk, data handling, and launch
+      - Data boundaries for AI systems documented and enforced in code
+      - A defined escalation path and postmortem practice for AI incidents
   - key: claude_fluency
     name: Claude fluency
     routes_to: FK-02
+    items:
+      - Platform capabilities in use beyond chat — tool use, structured outputs, citations
+      - MCP familiarity — Claude connected to internal systems through typed tools
+      - Prompting and context treated as engineering, with versioning and review
 triggers:
   - readiness
   - maturity
@@ -71,7 +92,12 @@ grounded_in:
      `axes` powers assess_readiness the same way: four axes, anchored 0-3
      scoring, each axis routing its gap to a pattern id. Re-routing a gap is
      a content edit here, never a code change — and load_catalog validates
-     every routes_to against real catalog ids at startup. -->
+     every routes_to against real catalog ids at startup.
+     `axes[].items` + `scale` ARE the questionnaire: three observable-fact
+     statements per axis, each rated 0-3 against the shared anchor labels.
+     One instrument, three renderers — get_pattern serves it, the web app's
+     /assess screen displays it, the skill carries it. Authored nowhere
+     else, ever. -->
 
 # FK-05 · Deployment Readiness Assessment
 

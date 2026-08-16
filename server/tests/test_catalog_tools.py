@@ -26,6 +26,19 @@ class TestGetPattern:
         json.dumps(get_pattern(CATALOG, "FK-02"))
 
 
+class TestAssessmentInstrument:
+    def test_fk05_serves_the_full_questionnaire(self):
+        # The instrument the web app renders and assess_readiness scores
+        # against must be complete at the source: 4 axes x 3 items + 4
+        # shared anchor labels, all from frontmatter.
+        p = get_pattern(CATALOG, "FK-05")
+        assert len(p["scale"]) == 4
+        assert [a["key"] for a in p["axes"]] == [
+            "delivery", "evals", "governance", "claude_fluency"
+        ]
+        assert all(len(a["items"]) == 3 for a in p["axes"])
+
+
 class TestListPatterns:
     def test_five_patterns_sorted_with_summary_keys_only(self):
         rows = list_patterns(CATALOG)

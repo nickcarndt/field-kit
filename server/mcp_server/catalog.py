@@ -63,6 +63,10 @@ class Axis(BaseModel):
     key: str
     name: str
     routes_to: str
+    # Questionnaire statements, each rated 0-3 against the pattern's shared
+    # `scale` labels. The instrument is content, so it lives in the pattern
+    # file — the web app and get_pattern both render it from here.
+    items: list[str] = []
 
 
 class Pattern(BaseModel):
@@ -84,6 +88,8 @@ class Pattern(BaseModel):
     pairs_with_all: bool = False
     fallback: bool = False
     axes: list[Axis] = []
+    # Anchor labels for scores 0-3, shared by every questionnaire item.
+    scale: list[str] = []
     framing: str
     sections: dict[str, str]
 
@@ -153,4 +159,9 @@ def load_catalog(patterns_dir: Path) -> dict[str, Pattern]:
                 raise CatalogError(
                     f"{p.id}: axis {ax.key!r} routes to unknown pattern {ax.routes_to!r}"
                 )
+        if any(ax.items for ax in p.axes) and len(p.scale) != 4:
+            raise CatalogError(
+                f"{p.id}: questionnaire items exist but `scale` does not define "
+                "exactly 4 anchor labels (scores 0-3)"
+            )
     return catalog
