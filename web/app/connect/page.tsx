@@ -77,7 +77,10 @@ export default function ConnectPage() {
         fail-closed — change one character of that key and every request returns
         401, which is a better demonstration than any diagram. Production tenants
         connect with private per-client keys instead (write to nick@nickarndt.com;
-        <code> export FIELDKIT_API_KEY</code> overrides the default).
+        <code> export FIELDKIT_API_KEY</code> overrides the default). One note:
+        auth is per-request via header — there is no OAuth endpoint, so
+        <code> /mcp</code>&apos;s re-authenticate action reports a 401 from the gate.
+        That is deny-by-default covering endpoints that were never built.
       </p>
       <p>
         Start <code>claude</code> in this directory, approve the project server, and
