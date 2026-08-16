@@ -7,6 +7,10 @@
   /* Hard offset shadows in a darkened paper tone: print physicality, the
      anti-soft-shadow. Frames are ink; internal rules stay field-line. */
   --press: #e2ded3;
+  /* Small TEXT never prints in field-line: #8a8f98 on paper is ~3:1 and
+     fails the 4.5:1 floor. Rules and hairlines keep field-line; text that
+     must read quiet uses this ink instead (~5.8:1). */
+  --field-ink: #5b6069;
   --display-size: 40px;
   --display-line: 48px;
   --section-size: 24px;
@@ -131,7 +135,7 @@ button:hover {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
-  color: var(--field-line);
+  color: var(--field-ink);
 }
 
 .site-meta a {
@@ -150,7 +154,7 @@ button:hover {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
-  color: var(--field-line);
+  color: var(--field-ink);
 }
 
 .site-footer a {
@@ -211,6 +215,32 @@ a.spec-plate:hover {
   }
 }
 
+/* The press metaphor completed: raised things seat into their housing when
+   pressed. Deliberately NOT transitioned — a mechanical snap, so it spends
+   no motion budget and reduced-motion is moot. */
+a.spec-plate:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--signal);
+}
+
+a.reco-chip:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--signal);
+}
+
+.example-chip:active,
+.find-form button:active,
+.code-block-bar button:active {
+  transform: translate(1px, 1px);
+}
+
+a.spec-plate,
+a.reco-chip,
+.example-chip,
+.find-form button {
+  -webkit-tap-highlight-color: transparent;
+}
+
 .plate-id-block {
   display: flex;
   align-items: baseline;
@@ -232,7 +262,7 @@ a.spec-plate:hover {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
-  color: var(--field-line);
+  color: var(--field-ink);
   white-space: nowrap;
 }
 
@@ -260,7 +290,11 @@ h1.plate-name {
 
 .plate-thesis {
   display: block;
+  font-family: var(--font-serif), "Source Serif 4", serif;
   font-style: italic;
+  /* 1.06em compensates Source Serif's smaller x-height beside Plex Sans. */
+  font-size: 1.06em;
+  line-height: var(--body-line);
   font-weight: 400;
   margin: 0 0 0.6rem;
 }
@@ -293,7 +327,7 @@ h1.plate-name {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
-  color: var(--field-line);
+  color: var(--field-ink);
 }
 
 .exemplar-list {
@@ -309,7 +343,7 @@ h1.plate-name {
 
 .exemplar-list li:not(:last-child)::after {
   content: " · ";
-  color: var(--field-line);
+  color: var(--field-ink);
 }
 
 .pattern-document {
@@ -326,12 +360,14 @@ h1.plate-name {
   counter-increment: fk-section;
   content: counter(fk-section, decimal-leading-zero);
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
-  font-size: var(--meta-size);
+  /* Ink on the baseline, not signal superscript: signal belongs to
+     interactive states and catalog badges only, and manuals set
+     "01 SCOPE" co-equal, not as a footnote marker. */
+  font-size: 1.0625rem;
   font-weight: 500;
-  color: var(--signal-ink);
+  color: var(--ink);
   letter-spacing: 0.06em;
-  margin-right: 0.75rem;
-  vertical-align: 0.32em;
+  margin-right: 0.6rem;
 }
 
 .pattern-document .framing {
@@ -571,10 +607,16 @@ code {
   margin-top: 0;
 }
 
+/* An instrument wears an engraved label; it doesn't headline itself. Keeps
+   the first screen's hierarchy to dek → plate names → labels. */
 .find-pattern h2 {
-  font-size: var(--section-size);
-  line-height: var(--section-line);
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: var(--meta-size);
+  line-height: var(--meta-line);
   font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
   margin: 0 0 0.65rem;
 }
 
@@ -598,7 +640,7 @@ code {
 }
 
 .find-form input::placeholder {
-  color: var(--field-line);
+  color: var(--field-ink);
   opacity: 1;
 }
 
@@ -613,7 +655,7 @@ code {
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
-  color: var(--field-line);
+  color: var(--field-ink);
 }
 
 .find-pattern .error-state {

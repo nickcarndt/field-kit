@@ -41,11 +41,13 @@ export default async function PatternPage({
     <div className="pattern-page">
       <header className="pattern-chrome">
         <SpecPlate pattern={pattern} heading index={index} total={catalog.length} />
-        <p className="pattern-meta">
+        {/* div, not p: ExemplarLinks renders a ul, and ul-inside-p gets
+            re-parented by the browser, ejecting it from the meta styling. */}
+        <div className="pattern-meta">
           {pattern.taxonomy}
           {" · "}
           <ExemplarLinks exemplars={pattern.exemplars} />
-        </p>
+        </div>
       </header>
       <PatternDocument pattern={pattern} />
       <Citations entries={pattern.grounded_in} />
