@@ -42,7 +42,9 @@ demonstration of the delivery model it recommends.
 
 Live exemplars: [Verity](https://verity-navy-five.vercel.app) (FK-01, FK-03,
 FK-04), [Prospectus](https://prospectus-nickarndt.vercel.app) (FK-02, FK-03),
-[Federal Readiness Suite](https://federal-readiness-suite.vercel.app) (FK-05),
+the [Partner Readiness Suite](https://partner-readiness-suite.vercel.app)
+(FK-05, evolved from the
+[Federal Readiness Suite](https://federal-readiness-suite.vercel.app)),
 and FieldKit's own server (FK-04).
 
 ## Quickstart — two minutes in Claude Code

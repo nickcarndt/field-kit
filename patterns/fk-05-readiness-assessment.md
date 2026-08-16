@@ -61,6 +61,8 @@ triggers:
   - governance
   - to production
 exemplars:
+  - name: Partner Readiness Suite
+    url: https://partner-readiness-suite.vercel.app
   - name: Evolved from the Federal Readiness Suite
     url: https://federal-readiness-suite.vercel.app
 grounded_in:
@@ -184,10 +186,15 @@ in this kit. Not a vision. A next action.
 
 ## Live exemplar
 
-**Evolved from the Federal Readiness Suite** —
-[federal-readiness-suite.vercel.app](https://federal-readiness-suite.vercel.app).
-The assessment instrument built for federal delivery readiness, generalized
-here to the four axes a GSI AI practice actually varies on.
+**Partner Readiness Suite** —
+[partner-readiness-suite.vercel.app](https://partner-readiness-suite.vercel.app).
+This pattern, interactive: guided practice intake, a streamed architecture
+recommendation, a judge-scored evaluation sandbox with score math in code, a
+trust and governance matrix, and an engagement roadmap with an eval gate
+before production. Evolved from the **Federal Readiness Suite**
+([federal-readiness-suite.vercel.app](https://federal-readiness-suite.vercel.app)),
+the assessment instrument built for federal delivery readiness — generalized
+to the four axes a partner AI practice actually varies on.
 
 ## Workshop outline (90 minutes)
 

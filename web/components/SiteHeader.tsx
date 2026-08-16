@@ -10,6 +10,7 @@ export function SiteHeader({ patternCount }: { patternCount: number }) {
         <span>
           Field manual · {patternCount} patterns
         </span>
+        <Link href="/assess">Assess</Link>
         <Link href="/connect">Connect</Link>
       </div>
     </header>
