@@ -11,6 +11,11 @@ import type { Pattern } from "@/lib/types";
 
 type Answers = Record<string, Array<number | null>>;
 
+// "0 — Not present: does not exist today" -> "Not present"
+function shortAnchor(full: string): string {
+  return full.split("—")[1]?.split(":")[0]?.trim() ?? "";
+}
+
 function emptyAnswers(assessment: Pattern): Answers {
   return Object.fromEntries(
     assessment.axes.map((a) => [a.key, a.items.map(() => null)]),
@@ -76,8 +81,8 @@ export function AssessmentForm({
         <section className="axis-group" key={axis.key}>
           <h2 className="axis-title">{axis.name}</h2>
           {axis.items.map((item, i) => (
-            <fieldset className="scoring" key={item}>
-              <legend>{item}</legend>
+            <div className="scoring" role="radiogroup" aria-label={item} key={item}>
+              <p className="statement">{item}</p>
               <div className="score-row">
                 {[0, 1, 2, 3].map((value) => {
                   const id = `${axis.key}-${i}-${value}`;
@@ -91,26 +96,30 @@ export function AssessmentForm({
                         onChange={() => setScore(axis.key, i, value)}
                         aria-label={assessment.scale[value]}
                       />
+                      {/* Anchor word ON the control — nobody should need to
+                          remember the legend, and title= is invisible on touch. */}
                       <label htmlFor={id} title={assessment.scale[value]}>
-                        {value}
+                        <span className="score-num">{value}</span>
+                        {shortAnchor(assessment.scale[value])}
                       </label>
                     </span>
                   );
                 })}
               </div>
-            </fieldset>
+            </div>
           ))}
         </section>
       ))}
 
       <div className="assess-actions">
+        <p className="assess-progress">{answered} / {total} scored</p>
         <button type="button" onClick={onSubmit}>
           Score the practice
         </button>
-        <span className="find-caption">
-          {answered} / {total} scored · same bands as the live server, computed
-          in your browser
-        </span>
+        <p className="find-caption">
+          Same bands as the live server, computed in your browser. No model
+          call.
+        </p>
       </div>
       {incomplete ? (
         <p className="error-state" role="status">

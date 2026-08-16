@@ -846,21 +846,25 @@ a.reco-chip:hover {
 }
 
 .scoring {
-  border: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 1.25rem;
+  align-items: center;
   border-top: 1px solid var(--field-line);
   margin: 0.85rem 0 0;
   padding: 0.75rem 0 0;
 }
 
-.scoring legend {
-  padding: 0 0 0.4rem;
+.scoring .statement {
+  margin: 0;
   font-size: var(--body-size);
   line-height: var(--body-line);
 }
 
 .score-row {
   display: flex;
-  gap: 0.4rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .scoring input[type="radio"] {
@@ -871,15 +875,24 @@ a.reco-chip:hover {
 }
 
 .scoring label {
-  display: inline-block;
-  min-width: 2.2rem;
-  text-align: center;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
   border: 1px solid var(--ink);
-  padding: 0.15rem 0;
+  padding: 0.15rem 0.55rem;
   font-family: var(--font-mono), "IBM Plex Mono", monospace;
   font-size: var(--meta-size);
   line-height: var(--meta-line);
+  white-space: nowrap;
   cursor: pointer;
+}
+
+.score-num {
+  color: var(--field-ink);
+}
+
+.scoring input:checked + label .score-num {
+  color: inherit;
 }
 
 .scoring input:checked + label {
@@ -893,17 +906,29 @@ a.reco-chip:hover {
 }
 
 .assess-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin: 1.5rem 0 0.75rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+.assess-progress {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-mono), "IBM Plex Mono", monospace;
+  font-size: var(--meta-size);
+  line-height: var(--meta-line);
+  color: var(--field-ink);
 }
 
 .assess-actions button {
+  display: block;
   font-size: var(--body-size);
-  padding: 0.4rem 1.1rem;
+  padding: 0.45rem 1.25rem;
   border-color: var(--ink);
+  margin: 0 0 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .scoring {
+    grid-template-columns: 1fr;
+  }
 }
 
 .assess-result {
