@@ -1,14 +1,17 @@
 import Link from "next/link";
 
-export function SiteHeader() {
+export function SiteHeader({ patternCount }: { patternCount: number }) {
   return (
     <header className="site-header">
       <Link href="/" className="wordmark">
         FieldKit
       </Link>
-      <nav className="site-nav" aria-label="Site">
+      <div className="site-meta">
+        <span>
+          Field manual · {patternCount} patterns
+        </span>
         <Link href="/connect">Connect</Link>
-      </nav>
+      </div>
     </header>
   );
 }

@@ -128,7 +128,9 @@ code path branches on a pattern name.
 
 **Honest scope.** Partners deploy Claude across a builder surface and a
 knowledge-worker surface. FieldKit deliberately addresses the builder
-surface. And it is a starter kit that shows the shape, not a canon: the five
+surface, and runs on the first-party API for the weekend build — the
+multi-cloud surface (Bedrock, Vertex) is the day-one extension in the seat,
+because that is where GSI delivery actually lives. And it is a starter kit that shows the shape, not a canon: the five
 exemplars are systems I shipped, and the natural next step inside a partner
 organization is replacing them with Anthropic's own reference architectures
 and partner-tested content.

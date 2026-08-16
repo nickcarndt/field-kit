@@ -1,8 +1,11 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import type { Metadata } from "next";
+import { FindPattern } from "@/components/FindPattern";
 import { InstallPanel } from "@/components/InstallPanel";
 import { WorkedExample } from "@/components/WorkedExample";
 import { loadCatalog } from "@/lib/catalog";
-import { assertDemoRecommendation } from "@/lib/recommend";
+import { assertDemoRecommendation, toRecommendable } from "@/lib/recommend";
 import { MCP_URL, SITE_DESCRIPTION } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,14 +19,32 @@ const DEMO_PROMPT =
 export default function ConnectPage() {
   const catalog = loadCatalog();
   const recommendations = assertDemoRecommendation(catalog);
+  // The video section exists only when the recording does — no stubs.
+  const hasDemoVideo = existsSync(
+    path.join(process.cwd(), "public", "fieldkit-demo.mp4"),
+  );
 
   return (
     <div className="connect">
       <h1>Connect</h1>
       <p className="lede">
-        Install the plugin and connect the catalog server from Claude Code. This site
-        never calls the server and never embeds a key.
+        Everything above the install steps works with zero setup. Below them is how
+        to put FieldKit in your own editor. This site never calls the server and
+        never embeds a key.
       </p>
+
+      {hasDemoVideo ? (
+        <>
+          <h2>Watch it work</h2>
+          <p>
+            A real Claude Code session — the plugin installing, a skill firing on a
+            plain question, the live server answering the thirty-second demo.
+            Nothing staged.
+          </p>
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video className="demo-video" controls preload="metadata" src="/fieldkit-demo.mp4" />
+        </>
+      ) : null}
 
       <h2>Install the skills</h2>
       <p>
@@ -59,6 +80,8 @@ export default function ConnectPage() {
       </p>
 
       <WorkedExample prompt={DEMO_PROMPT} recommendations={recommendations} />
+
+      <FindPattern catalog={catalog.map(toRecommendable)} />
 
       <h2>No Claude Code</h2>
       <p>

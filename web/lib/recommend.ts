@@ -1,4 +1,13 @@
-import type { Pattern } from "./types";
+export type Recommendable = {
+  id: string;
+  slug: string;
+  name: string;
+  thesis: string;
+  kills: string;
+  triggers: string[];
+  pairs_with_all: boolean;
+  fallback: boolean;
+};
 
 export type Recommendation = {
   id: string;
@@ -10,6 +19,19 @@ export type Recommendation = {
   reason: string;
 };
 
+export function toRecommendable(p: Recommendable): Recommendable {
+  return {
+    id: p.id,
+    slug: p.slug,
+    name: p.name,
+    thesis: p.thesis,
+    kills: p.kills,
+    triggers: p.triggers,
+    pairs_with_all: p.pairs_with_all,
+    fallback: p.fallback,
+  };
+}
+
 function hits(useCase: string, triggers: string[]): string[] {
   return triggers.filter((t) => new RegExp(`\\b${escapeRegExp(t)}`, "i").test(useCase));
 }
@@ -18,7 +40,7 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function entry(p: Pattern, matched: string[], reason: string): Recommendation {
+function entry(p: Recommendable, matched: string[], reason: string): Recommendation {
   return {
     id: p.id,
     name: p.name,
@@ -31,11 +53,11 @@ function entry(p: Pattern, matched: string[], reason: string): Recommendation {
 }
 
 export function recommendPattern(
-  catalog: Pattern[],
+  catalog: Recommendable[],
   useCase: string,
 ): { use_case: string; recommendations: Recommendation[]; method: string } {
-  const scored: { p: Pattern; matched: string[] }[] = [];
-  const companions: { p: Pattern; matched: string[] }[] = [];
+  const scored: { p: Recommendable; matched: string[] }[] = [];
+  const companions: { p: Recommendable; matched: string[] }[] = [];
 
   for (const p of catalog) {
     const matched = hits(useCase, p.triggers);
@@ -93,7 +115,7 @@ export function recommendPattern(
 export const DEMO_QUERY =
   "which pattern fits a claims-processing agent for an insurance client";
 
-export function assertDemoRecommendation(catalog: Pattern[]): Recommendation[] {
+export function assertDemoRecommendation(catalog: Recommendable[]): Recommendation[] {
   const { recommendations } = recommendPattern(catalog, DEMO_QUERY);
   const ids = recommendations.map((r) => r.id);
   if (ids[0] !== "FK-01" || !ids.includes("FK-03")) {

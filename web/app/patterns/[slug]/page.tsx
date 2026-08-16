@@ -32,13 +32,15 @@ export default async function PatternPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  const catalog = loadCatalog();
   const pattern = getPatternBySlug(slug);
   if (!pattern) notFound();
+  const index = catalog.findIndex((p) => p.id === pattern.id) + 1;
 
   return (
     <div className="pattern-page">
       <header className="pattern-chrome">
-        <SpecPlate pattern={pattern} heading />
+        <SpecPlate pattern={pattern} heading index={index} total={catalog.length} />
         <p className="pattern-meta">
           {pattern.taxonomy}
           {" · "}

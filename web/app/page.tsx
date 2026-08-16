@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { EmptyState } from "@/components/EmptyState";
+import { FindPattern } from "@/components/FindPattern";
 import { SpecPlate } from "@/components/SpecPlate";
 import { loadCatalog } from "@/lib/catalog";
+import { toRecommendable } from "@/lib/recommend";
 import { LIBRARY_DEK, SITE_DESCRIPTION } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -11,14 +13,21 @@ export const metadata: Metadata = {
 
 export default function LibraryPage() {
   const patterns = loadCatalog();
+  const total = patterns.length;
   return (
     <div className="library">
       <h1 className="library-dek">{LIBRARY_DEK}</h1>
-      {patterns.length ? (
+      <FindPattern catalog={patterns.map(toRecommendable)} />
+      {total ? (
         <ul className="plate-stack">
-          {patterns.map((pattern) => (
+          {patterns.map((pattern, i) => (
             <li key={pattern.id}>
-              <SpecPlate pattern={pattern} href={`/patterns/${pattern.slug}`} />
+              <SpecPlate
+                pattern={pattern}
+                href={`/patterns/${pattern.slug}`}
+                index={i + 1}
+                total={total}
+              />
             </li>
           ))}
         </ul>
